@@ -16,7 +16,7 @@ type SubscriptionDTOResponse struct {
 	StartDate   string     `json:"start_date"    example:"07-2025"`
 	EndDate     *string    `json:"end_date"      example:"08-2025"`
 	CreatedAt   time.Time  `json:"created_at"    example:"2026-02-26T10:30:00Z"`
-	UpdatedAt   *time.Time `json:"updated_at"    example:"null"`
+	UpdatedAt   *time.Time `json:"updated_at"    example:"2026-06-24T16:15:18.62982Z"`
 }
 
 type SubscriptionsTotalPrice struct {
@@ -28,7 +28,7 @@ type SubscriptionRequest struct {
 	Price       int       `json:"price"              example:"400"`
 	UserID      uuid.UUID `json:"user_id"            example:"60601fee-2bf1-4721-ae6f-7636e79a0cba"`
 	StartDate   string    `json:"start_date"         example:"07-2025"`
-	EndDate     *string   `json:"end_date,omitempty" example:"null"`
+	EndDate     *string   `json:"end_date,omitempty" example:"08-2025"`
 }
 
 func subscriptionDTOFromDomain(sub domain.Subscription) SubscriptionDTOResponse {

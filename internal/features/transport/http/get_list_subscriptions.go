@@ -9,6 +9,14 @@ import (
 
 type GetSubscriptionsResponse []SubscriptionDTOResponse
 
+// GetSubscriptions     godoc
+// @Summary             Список подписок
+// @Description         Просмотр списка всех подписок
+// @Tags                subscriptions
+// @Produce             json
+// @Success             200 {object} GetSubscriptionsResponse "Список подписок"
+// @Failure             500 {object} core_http_response.ErrorResponse "Internal server error"
+// @Router              /subscriptions [get]
 func (h *SubscriptionsHTTPHandler) GetSubscriptions(rw http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log := core_logger.FromContext(ctx)
