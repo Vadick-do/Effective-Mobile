@@ -1,0 +1,342 @@
+basePath: /api/v1
+definitions:
+  github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse:
+    properties:
+      error:
+        example: full error text
+        type: string
+      message:
+        example: short human-readable message
+        type: string
+    type: object
+  internal_features_transport_http.CreateSubscriptionResponse:
+    properties:
+      created_at:
+        example: "2026-02-26T10:30:00Z"
+        type: string
+      end_date:
+        example: 08-2025
+        type: string
+      id:
+        example: a3f2e8d1-9b4c-4c7f-b2d6-1e5a8c9f0b3d
+        type: string
+      price:
+        example: 400
+        type: integer
+      service_name:
+        example: Yandex Plus
+        type: string
+      start_date:
+        example: 07-2025
+        type: string
+      updated_at:
+        example: "2026-06-24T16:15:18.62982Z"
+        type: string
+      user_id:
+        example: 60601fee-2bf1-4721-ae6f-7636e79a0cba
+        type: string
+    type: object
+  internal_features_transport_http.GetSubscriptionResponse:
+    properties:
+      created_at:
+        example: "2026-02-26T10:30:00Z"
+        type: string
+      end_date:
+        example: 08-2025
+        type: string
+      id:
+        example: a3f2e8d1-9b4c-4c7f-b2d6-1e5a8c9f0b3d
+        type: string
+      price:
+        example: 400
+        type: integer
+      service_name:
+        example: Yandex Plus
+        type: string
+      start_date:
+        example: 07-2025
+        type: string
+      updated_at:
+        example: "2026-06-24T16:15:18.62982Z"
+        type: string
+      user_id:
+        example: 60601fee-2bf1-4721-ae6f-7636e79a0cba
+        type: string
+    type: object
+  internal_features_transport_http.PutSubscriptionResponse:
+    properties:
+      created_at:
+        example: "2026-02-26T10:30:00Z"
+        type: string
+      end_date:
+        example: 08-2025
+        type: string
+      id:
+        example: a3f2e8d1-9b4c-4c7f-b2d6-1e5a8c9f0b3d
+        type: string
+      price:
+        example: 400
+        type: integer
+      service_name:
+        example: Yandex Plus
+        type: string
+      start_date:
+        example: 07-2025
+        type: string
+      updated_at:
+        example: "2026-06-24T16:15:18.62982Z"
+        type: string
+      user_id:
+        example: 60601fee-2bf1-4721-ae6f-7636e79a0cba
+        type: string
+    type: object
+  internal_features_transport_http.SubscriptionDTOResponse:
+    properties:
+      created_at:
+        example: "2026-02-26T10:30:00Z"
+        type: string
+      end_date:
+        example: 08-2025
+        type: string
+      id:
+        example: a3f2e8d1-9b4c-4c7f-b2d6-1e5a8c9f0b3d
+        type: string
+      price:
+        example: 400
+        type: integer
+      service_name:
+        example: Yandex Plus
+        type: string
+      start_date:
+        example: 07-2025
+        type: string
+      updated_at:
+        example: "2026-06-24T16:15:18.62982Z"
+        type: string
+      user_id:
+        example: 60601fee-2bf1-4721-ae6f-7636e79a0cba
+        type: string
+    type: object
+  internal_features_transport_http.SubscriptionRequest:
+    properties:
+      end_date:
+        example: 08-2025
+        type: string
+      price:
+        example: 400
+        type: integer
+      service_name:
+        example: Yandex Plus
+        type: string
+      start_date:
+        example: 07-2025
+        type: string
+      user_id:
+        example: 60601fee-2bf1-4721-ae6f-7636e79a0cba
+        type: string
+    type: object
+  internal_features_transport_http.TotalPriceResponse:
+    properties:
+      total:
+        example: 1000
+        type: integer
+    type: object
+host: 127.0.0.1:5050
+info:
+  contact: {}
+  description: Application REST-API scheme
+  title: Golang Effective Mobile API
+  version: "1.0"
+paths:
+  /subscriptions:
+    get:
+      description: Просмотр списка всех подписок
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Список подписок
+          schema:
+            items:
+              $ref: '#/definitions/internal_features_transport_http.SubscriptionDTOResponse'
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+      summary: Список подписок
+      tags:
+      - subscriptions
+    post:
+      consumes:
+      - application/json
+      description: Создать новую подписку в системе.
+      parameters:
+      - description: CreateSubscription тело запроса
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_features_transport_http.SubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Успешно созданная подписка
+          schema:
+            $ref: '#/definitions/internal_features_transport_http.CreateSubscriptionResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+      summary: Создать подписку
+      tags:
+      - subscriptions
+  /subscriptions/{id}:
+    delete:
+      description: Удалить существующую в системе подписку по ее ID
+      parameters:
+      - description: ID удаляемой подписки
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Успешное удаление подписки
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+        "404":
+          description: Subscription not found
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+      summary: Удаление подписки
+      tags:
+      - subscriptions
+    get:
+      description: Получение конкретной подписки по ID
+      parameters:
+      - description: ID получаемой подписки
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: подписка успешно найдена
+          schema:
+            $ref: '#/definitions/internal_features_transport_http.GetSubscriptionResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+        "404":
+          description: Subscription not found
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+      summary: Получение подписки
+      tags:
+      - subscriptions
+    put:
+      consumes:
+      - application/json
+      description: |-
+        Обновляет информацию об уже существующей в системе подписке.
+        Тело запроса должно содержать все поля подписки (как при создании).
+        Поле `end_date` опционально; если оно не передано или равно null, дата окончания сбрасывается.
+      parameters:
+      - description: ID обновляемой подписки
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: PutSubscription тело запроса
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/internal_features_transport_http.SubscriptionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешно измененная подписка
+          schema:
+            $ref: '#/definitions/internal_features_transport_http.PutSubscriptionResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+        "404":
+          description: Subscription not found
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+      summary: Обновить запись о подписке полностью
+      tags:
+      - subscriptions
+  /subscriptions/total:
+    get:
+      description: Получение общей суммы подписок за указанный период с опциональной
+        фильтрацией по id пользователя и названию сервиса
+      parameters:
+      - description: Дата начала периода в формате MM-YYYY
+        in: query
+        name: from
+        required: true
+        type: string
+      - description: Дата окончания периода в формате MM-YYYY
+        in: query
+        name: to
+        required: true
+        type: string
+      - description: Фильтрация подписок по ID пользователя
+        format: uuid
+        in: query
+        name: user_id
+        type: string
+      - description: Фильтрация подписок по названию сервиса
+        in: query
+        name: service_name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Общая стоимость подписок
+          schema:
+            $ref: '#/definitions/internal_features_transport_http.TotalPriceResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/github_com_Vadick-do_Effective-Mobile_internal_core_transport_http_response.ErrorResponse'
+      summary: Получение общей суммы подписок
+      tags:
+      - subscriptions
+swagger: "2.0"

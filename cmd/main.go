@@ -17,8 +17,15 @@ import (
 	subscriptions_service "github.com/Vadick-do/Effective-Mobile/internal/features/service"
 	subscriptions_transport_http "github.com/Vadick-do/Effective-Mobile/internal/features/transport/http"
 	"go.uber.org/zap"
+
+	_ "github.com/Vadick-do/Effective-Mobile/docs"
 )
 
+// @title        Golang Effective Mobile API
+// @version      1.0
+// @description  Application REST-API scheme
+// @host         127.0.0.1:5050
+// @BasePath     /api/v1
 func main() {
 	cfg := core_config.NewConfigMust()
 	time.Local = cfg.TimeZone
@@ -55,6 +62,7 @@ func main() {
 	httpServer := core_http_server.NewHTTPServer(
 		httpConfig,
 		logger,
+		core_http_middleware.CORS(httpConfig.AllowedOrigins),
 		core_http_middleware.RequestID(),
 		core_http_middleware.Logger(logger),
 		core_http_middleware.Trace(),
@@ -74,6 +82,7 @@ func main() {
 		apiVersionRouter,
 		// apiVersionRouterv2,
 	)
+	httpServer.RegisterSwagger()
 
 	if err := httpServer.Run(ctx); err != nil {
 		logger.Error("HTTP server run error", zap.Error(err))

@@ -76,3 +76,11 @@ ps:
 
 app-undeploy:
 	@docker compose down efmobileapp
+
+swagger_gen:
+	@docker compose run --rm swagger \
+		init \
+		-g cmd/main.go \
+		-o docs \
+		--parseInternal \
+		--parseDependency

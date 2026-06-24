@@ -10,6 +10,17 @@ import (
 
 type GetSubscriptionResponse SubscriptionDTOResponse
 
+// GetSubscription   godoc
+// @Summary          Получение подписки
+// @Description      Получение конкретной подписки по ID
+// @Tags             subscriptions
+// @Produce          json
+// @Param            id path string true "ID получаемой подписки" Format(uuid)
+// @Success          200 {object} GetSubscriptionResponse "подписка успешно найдена"
+// @Failure          400 {object} core_http_response.ErrorResponse "Bad request"
+// @Failure          404 {object} core_http_response.ErrorResponse "Subscription not found"
+// @Failure          500 {object} core_http_response.ErrorResponse "Internal server error"
+// @Router           /subscriptions/{id} [get]
 func (h *SubscriptionsHTTPHandler) GetSubscription(rw http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log := core_logger.FromContext(ctx)

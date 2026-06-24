@@ -8,6 +8,16 @@ import (
 	core_http_response "github.com/Vadick-do/Effective-Mobile/internal/core/transport/http/response"
 )
 
+// DeleteSubscription   godoc
+// @Summary             Удаление подписки
+// @Description         Удалить существующую в системе подписку по ее ID
+// @Tags                subscriptions
+// @Param               id path string true "ID удаляемой подписки" Format(uuid)
+// @Success             204 "Успешное удаление подписки"
+// @Failure             400 {object} core_http_response.ErrorResponse "Bad request"
+// @Failure             404 {object} core_http_response.ErrorResponse "Subscription not found"
+// @Failure             500 {object} core_http_response.ErrorResponse "Internal server error"
+// @Router              /subscriptions/{id} [delete]
 func (h *SubscriptionsHTTPHandler) DeleteSubscription(rw http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log := core_logger.FromContext(ctx)

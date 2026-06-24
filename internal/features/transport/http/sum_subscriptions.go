@@ -10,6 +10,21 @@ import (
 	"github.com/google/uuid"
 )
 
+type TotalPriceResponse SubscriptionsTotalPrice
+
+// SumSubscriptions     godoc
+// @Summary             Получение общей суммы подписок
+// @Description         Получение общей суммы подписок за указанный период с опциональной фильтрацией по id пользователя и названию сервиса
+// @Tags                subscriptions
+// @Produce             json
+// @Param               from          query string true  "Дата начала периода в формате MM-YYYY"
+// @Param               to            query string true  "Дата окончания периода в формате MM-YYYY"
+// @Param               user_id       query string false "Фильтрация подписок по ID пользователя" Format(uuid)
+// @Param               service_name  query string false "Фильтрация подписок по названию сервиса"
+// @Success             200 {object}  TotalPriceResponse "Общая стоимость подписок"
+// @Failure             400 {object} core_http_response.ErrorResponse "Bad request"
+// @Failure             500 {object} core_http_response.ErrorResponse "Internal server error"
+// @Router              /subscriptions/total [get]
 func (h *SubscriptionsHTTPHandler) Sumsubscriptions(rw http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log := core_logger.FromContext(ctx)
@@ -27,7 +42,7 @@ func (h *SubscriptionsHTTPHandler) Sumsubscriptions(rw http.ResponseWriter, r *h
 		return
 	}
 
-	response := subscriptionsTotalPrice(totalDomain)
+	response := TotalPriceResponse(subscriptionsTotalPrice(totalDomain))
 	responseHandler.JSONResponse(response, http.StatusOK)
 }
 

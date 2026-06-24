@@ -11,6 +11,17 @@ import (
 
 type CreateSubscriptionResponse SubscriptionDTOResponse
 
+// CreateSubscription   godoc
+// @Summary             Создать подписку
+// @Description         Создать новую подписку в системе.
+// @Tags                subscriptions
+// @Accept              json
+// @Produce             json
+// @Param               request body SubscriptionRequest true "CreateSubscription тело запроса"
+// @Success             201 {object} CreateSubscriptionResponse "Успешно созданная подписка"
+// @Failure             400 {object} core_http_response.ErrorResponse "Bad request"
+// @Failure             500 {object} core_http_response.ErrorResponse "Internal server error"
+// @Router              /subscriptions [post]
 func (h *SubscriptionsHTTPHandler) CreateSubscription(rw http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log := core_logger.FromContext(ctx)
